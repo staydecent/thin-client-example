@@ -1,0 +1,60 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "5bb5930c8066bd446778b6191f8a4fce",
+    "content-hash": "d12543d49a447b7aae8c48a9c1e8efa6",
+    "packages": [
+        {
+            "name": "gum/gum",
+            "version": "0.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/staydecent/Gum.git",
+                "reference": "ed1aaf64451cdf86f2bdcdef042be353aaae11e8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/staydecent/Gum/zipball/ed1aaf64451cdf86f2bdcdef042be353aaae11e8",
+                "reference": "ed1aaf64451cdf86f2bdcdef042be353aaae11e8",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Gum": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Public Domain"
+            ],
+            "authors": [
+                {
+                    "name": "Adrian Unger",
+                    "email": "dev@staydecent.ca",
+                    "homepage": "http://staydecent.ca"
+                }
+            ],
+            "description": "Map URLs to callbacks.",
+            "homepage": "https://github.com/staydecent/Gum",
+            "keywords": [
+                "map",
+                "microframework",
+                "router",
+                "routing"
+            ],
+            "time": "2015-12-06 08:53:06"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}

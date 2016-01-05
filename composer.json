@@ -1,0 +1,8 @@
+{
+  "require": {
+    "gum/gum": "^0.2.1"
+  },
+  "autoload": {
+    "psr-4": {"Acme\\": "server/src/"}
+  }
+}
