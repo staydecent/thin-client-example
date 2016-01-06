@@ -7,10 +7,10 @@
   "scripts": {
     "build": "rm -rf server/assets/* && npm run build-js && npm run build-css",
     "build-css": "cat client/css/*.css > server/assets/bundle.css",
-    "build-js": "browserify client/app.js | uglifyjs -mc > server/assets/bundle.js",
+    "build-js": "browserify -t riotify client/app.js | uglifyjs -mc > server/assets/bundle.js",
     "watch": "npm run watch-js & npm run watch-css",
     "watch-css": "watch-run -p 'client/css/*.css' npm run build-css",
-    "watch-js": "watchify client/app.js -o server/assets/bundle.js -dv",
+    "watch-js": "watchify -t riotify client/app.js -o server/assets/bundle.js -dv",
     "start": "php -S localhost:8000 -t server/",
     "test": "tape client/test/*.js"
   },
@@ -18,10 +18,13 @@
   "author": "Adrian Unger",
   "license": "MIT",
   "dependencies": {
+    "reqwest": "^2.0.5",
+    "riot": "^2.3.12"
   },
   "devDependencies": {
     "browserify": "^12.0.1",
     "jshint": "^2.5.6",
+    "riotify": "^0.1.2",
     "uglifyjs": "^2.4.10",
     "watch-run": "^1.2.4",
     "watchify": "^3.6.1"

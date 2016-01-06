@@ -9,7 +9,10 @@ class Helpers {
   public static function tpl($file_name, $vars = array()) {
     $file = 'templates/' . $file_name . '.html';
     $vars['layout'] = function ($name) {
-      include 'templates/layout/'.$name.'.html';
+      $isPJAX = !is_null($_SERVER['HTTP_X_PJAX']);
+      if (!$isPJAX) {
+        include 'templates/layout/'.$name.'.html';
+      }
     };
     return Res::render($file, $vars);
   }
