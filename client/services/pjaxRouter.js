@@ -1,12 +1,28 @@
 'use strict'
 
-var reqwest = require('reqwest')
+var $ = require('jquery')
 
-module.exports = function(elmId, routes) {
+module.exports = function(opts) {
+  var defaultOps = {
+    selector: '#pjax',
+    routes: {},
+    animation: {
+      exit: {
+        opacity: 0
+      },
+      enter: {
+        opacity: 1
+      },
+      duration: 500
+    }
+  }
+
+  opts = $.extend(defaultOps, opts)
+
   var handleRouting = function() {
     var route = window.location.pathname
-    if (routes.hasOwnProperty(route)) {
-      routes[route]()
+    if (opts.routes.hasOwnProperty(route)) {
+      opts.routes[route]()
     }
   }
 
@@ -19,19 +35,22 @@ module.exports = function(elmId, routes) {
 
   // Load partial template from server and update pushState
   function navigate(url) {
-    reqwest({
+    $.ajax({
       url: url,
       headers: { 'X-PJAX': true },
       success: function(resp) {
-        var container = document.getElementById(elmId)
-        container.addEventListener("transitionend", function() {
-          container.outerHTML = resp
-          container.style.opacity = 1
-          pushState(url)
-          handleRouting()
-        }, true)
-
-        container.style.opacity = 0
+        $(opts.selector).animate(
+          opts.animation.exit,
+          opts.animation.duration,
+          function() {
+            $(opts.selector).replaceWith(resp)
+            $(opts.selector)
+              .css(opts.animation.preEnter)
+              .animate(opts.animation.enter, opts.animation.duration)
+            pushState(url)
+            handleRouting()
+          }
+        )
       }
     })
   }
@@ -42,15 +61,4 @@ module.exports = function(elmId, routes) {
       window.history.pushState({}, '', url)
     }
   }
-}
-
-function dispatchCustomEvent(elmId, name, data) {
-  if (window.CustomEvent) {
-    var event = new CustomEvent(name, {detail: data})
-  } else {
-    var event = document.createEvent('CustomEvent')
-    event.initCustomEvent(name, true, true, data)
-  }
-
-  document.getElementById(elmId).dispatchEvent(event)
 }

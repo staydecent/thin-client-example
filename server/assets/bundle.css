@@ -847,9 +847,20 @@ there.
 }
 
 #pjax {
-  -webkit-transition: opacity .5s ease-in-out;
-  -moz-transition: opacity .5s ease-in-out;
-  -ms-transition: opacity .5s ease-in-out;
-  -o-transition: opacity .5s ease-in-out;
-  transition: opacity .5s ease-in-out;
+}
+
+.slidefade-transition {
+  transition: all .5s ease-in-out;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.slidefade-enter {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.slidefade-leave {
+  opacity: 0;
+  transform: translateX(-100%);
 }

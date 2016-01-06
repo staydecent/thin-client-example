@@ -18,7 +18,7 @@
   "author": "Adrian Unger",
   "license": "MIT",
   "dependencies": {
-    "reqwest": "^2.0.5",
+    "jquery": "^2.1.4",
     "riot": "^2.3.12"
   },
   "devDependencies": {
