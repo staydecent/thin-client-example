@@ -1,5 +1,6 @@
 'use strict'
 
+var $ = require('jquery')
 var riot = require('riot')
 var pjaxRouter = require('./services/pjaxRouter.js')
 var todo = require('./todo.tag')
@@ -32,15 +33,10 @@ window.onpopstate = function() {
 }
 
 // Add our event listeners on nav links
-var navLinks = document.querySelectorAll('.nav > a.button')
-for (var i = 0; i < navLinks.length; ++i) {
-  navLinks[i].addEventListener('click', onNavClick)
-}
-
-// User click event on nav links
-function onNavClick(ev) {
-  ev.preventDefault()
-  router.navigate(ev.target.getAttribute('href'))
-}
-
-console.log('Loaded')
+$(document).ready(function() {
+  console.log('ready', $('.nav > a.button'))
+  $('.nav > a.button').on('click', function onNavClick(ev) {
+    ev.preventDefault()
+    router.navigate(ev.target.getAttribute('href'))
+  })
+})

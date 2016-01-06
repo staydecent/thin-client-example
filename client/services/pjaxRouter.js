@@ -10,6 +10,9 @@ module.exports = function(opts) {
       exit: {
         opacity: 0
       },
+      preEnter: {
+        opacity: 0
+      },
       enter: {
         opacity: 1
       },
