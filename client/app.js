@@ -1,8 +1,19 @@
-var reqwest = require('reqwest')
+'use strict'
+
 var riot = require('riot')
+var pjaxRouter = require('./services/pjaxRouter.js')
 var todo = require('./todo.tag')
 
-handleRouting();
+var router = pjaxRouter('pjax', {
+  '/react': function() {
+    riot.mount(todo)
+  }
+})
+
+// Handle browser navigation (ex. back button)
+window.onpopstate = function() {
+  router.navigate(window.location.pathname)
+}
 
 // Add our event listeners on nav links
 var navLinks = document.querySelectorAll('.nav > a.button')
@@ -10,42 +21,8 @@ for (var i = 0; i < navLinks.length; ++i) {
   navLinks[i].addEventListener('click', onNavClick)
 }
 
-// User navigation (ex. browser back button)
-window.onpopstate = function() {
-  navigate(window.location.pathname)
-}
-
 // User click event on nav links
 function onNavClick(ev) {
   ev.preventDefault()
-  navigate(ev.target.getAttribute('href'))
-}
-
-// Load partial template from server and update pushState
-function navigate(url) {
-  reqwest({
-    url: url,
-    headers: { 'X-PJAX': true },
-    success: function(resp) {
-      document.getElementById('pjax').outerHTML = resp
-      pushState(url)
-    }
-  })
-}
-
-// Simplified wrapper around history.pushState
-function pushState(url) {
-  if (url !== window.location.pathname) {
-    window.history.pushState({}, '', url)
-  }
-  handleRouting()
-}
-
-// Our dumb router
-function handleRouting() {
-  switch (window.location.pathname) {
-    case '/react':
-      riot.mount(todo)
-      break;
-  }
+  router.navigate(ev.target.getAttribute('href'))
 }
