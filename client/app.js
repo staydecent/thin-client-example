@@ -1,7 +1,8 @@
 var reqwest = require('reqwest')
 var riot = require('riot')
 var todo = require('./todo.tag')
-riot.mount(todo)
+
+handleRouting();
 
 // Add our event listeners on nav links
 var navLinks = document.querySelectorAll('.nav > a.button')
@@ -36,5 +37,15 @@ function navigate(url) {
 function pushState(url) {
   if (url !== window.location.pathname) {
     window.history.pushState({}, '', url)
+  }
+  handleRouting()
+}
+
+// Our dumb router
+function handleRouting() {
+  switch (window.location.pathname) {
+    case '/react':
+      riot.mount(todo)
+      break;
   }
 }
