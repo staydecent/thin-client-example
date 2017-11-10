@@ -38,7 +38,7 @@
       "Preact"
     ],
     "ignore": [
-      "build"
+      "server"
     ]
   }
 }
