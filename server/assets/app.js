@@ -202,7 +202,7 @@ window.onpopstate = function () {
 (0, _jquery2.default)(document).ready(function () {
   return (0, _jquery2.default)('.nav > a.button').on('click', function onNavClick(ev) {
     ev.preventDefault();
-    router.navigate(ev.target.getAttribute('href'));
+    router.navigate(ev.target.getAttribute('href'), { checkUrl: true });
   });
 });
 });
@@ -223,7 +223,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var items = [{ title: 'Try out some experimental libraries' }, { title: 'Do we really need vDom?' }, { title: 'Pick of some local raspber ries' }];
 
 exports.default = function () {
-  return _preact2.default.h(
+  return console.log('Todo') || _preact2.default.h(
     'div',
     null,
     _preact2.default.h(
@@ -245,9 +245,19 @@ exports.default = function () {
 ;require.register("client/services/pjaxRouter.js", function(exports, require, module) {
 'use strict';
 
-var $ = require('jquery');
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-module.exports = function (opts) {
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (opts) {
   var defaultOps = {
     selector: '#pjax',
     routes: {},
@@ -265,7 +275,7 @@ module.exports = function (opts) {
     }
   };
 
-  opts = $.extend(defaultOps, opts);
+  opts = _extends({}, defaultOps, opts);
 
   var handleRouting = function handleRouting() {
     var route = window.location.pathname;
@@ -276,28 +286,33 @@ module.exports = function (opts) {
 
   handleRouting();
 
-  return {
-    navigate: navigate,
-    handleRouting: handleRouting
+  // Load partial template from server and update pushState
+  var navigate = function navigate(url, _ref) {
+    var checkUrl = _ref.checkUrl;
 
-    // Load partial template from server and update pushState
-  };function navigate(url) {
-    $.ajax({
+    if (checkUrl && url === window.location.pathname) {
+      return;
+    }
+    _jquery2.default.ajax({
       url: url,
       headers: { 'X-PJAX': true },
       success: function success(resp) {
-        $(opts.selector).animate(opts.animation.exit, opts.animation.duration, function () {
-          $(opts.selector).replaceWith(resp);
-          $(opts.selector).css(opts.animation.preEnter).animate(opts.animation.enter, opts.animation.duration);
+        (0, _jquery2.default)(opts.selector).animate(opts.animation.exit, opts.animation.duration, function () {
+          (0, _jquery2.default)(opts.selector).replaceWith(resp);
+          (0, _jquery2.default)(opts.selector).css(opts.animation.preEnter).animate(opts.animation.enter, opts.animation.duration);
           pushState(url);
           handleRouting();
         });
       }
     });
-  }
+  };
 
-  // Simplified wrapper around history.pushState
-  function pushState(url) {
+  return {
+    navigate: navigate,
+    handleRouting: handleRouting
+
+    // Simplified wrapper around history.pushState
+  };function pushState(url) {
     if (url !== window.location.pathname) {
       window.history.pushState({}, '', url);
     }

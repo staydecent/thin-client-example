@@ -35,6 +35,6 @@ window.onpopstate = () =>
 $(document).ready(() =>
   $('.nav > a.button').on('click', function onNavClick (ev) {
     ev.preventDefault()
-    router.navigate(ev.target.getAttribute('href'))
+    router.navigate(ev.target.getAttribute('href'), {checkUrl: true})
   })
 )

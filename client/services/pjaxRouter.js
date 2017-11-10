@@ -1,9 +1,7 @@
-'use strict'
+import $ from 'jquery'
 
-var $ = require('jquery')
-
-module.exports = function (opts) {
-  var defaultOps = {
+export default (opts) => {
+  const defaultOps = {
     selector: '#pjax',
     routes: {},
     animation: {
@@ -20,10 +18,10 @@ module.exports = function (opts) {
     }
   }
 
-  opts = $.extend(defaultOps, opts)
+  opts = {...defaultOps, ...opts}
 
-  var handleRouting = function () {
-    var route = window.location.pathname
+  const handleRouting = () => {
+    const route = window.location.pathname
     if (opts.routes.hasOwnProperty(route)) {
       opts.routes[route]()
     }
@@ -31,21 +29,19 @@ module.exports = function (opts) {
 
   handleRouting()
 
-  return {
-    navigate: navigate,
-    handleRouting: handleRouting
-  }
-
   // Load partial template from server and update pushState
-  function navigate (url) {
+  const navigate = (url, {checkUrl}) => {
+    if (checkUrl && url === window.location.pathname) {
+      return
+    }
     $.ajax({
       url: url,
-      headers: { 'X-PJAX': true },
-      success: function (resp) {
+      headers: {'X-PJAX': true},
+      success: (resp) => {
         $(opts.selector).animate(
           opts.animation.exit,
           opts.animation.duration,
-          function () {
+          () => {
             $(opts.selector).replaceWith(resp)
             $(opts.selector)
               .css(opts.animation.preEnter)
@@ -56,6 +52,11 @@ module.exports = function (opts) {
         )
       }
     })
+  }
+
+  return {
+    navigate,
+    handleRouting
   }
 
   // Simplified wrapper around history.pushState

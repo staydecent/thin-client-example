@@ -5,6 +5,7 @@ const items = [
 ]
 
 export default () =>
+  console.log('Todo') ||
   <div>
     <ul>
       {items.map(({title}) => <h3>{title}</h3>)}
