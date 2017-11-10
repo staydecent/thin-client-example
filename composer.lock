@@ -4,21 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5bb5930c8066bd446778b6191f8a4fce",
-    "content-hash": "d12543d49a447b7aae8c48a9c1e8efa6",
+    "content-hash": "9dff7fb31942dfa5391d88cb27feb371",
     "packages": [
         {
             "name": "gum/gum",
-            "version": "0.2.1",
+            "version": "0.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/staydecent/Gum.git",
-                "reference": "ed1aaf64451cdf86f2bdcdef042be353aaae11e8"
+                "reference": "f53b6131a12a41846c5ca7d2246280ffab9b0038"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/staydecent/Gum/zipball/ed1aaf64451cdf86f2bdcdef042be353aaae11e8",
-                "reference": "ed1aaf64451cdf86f2bdcdef042be353aaae11e8",
+                "url": "https://api.github.com/repos/staydecent/Gum/zipball/f53b6131a12a41846c5ca7d2246280ffab9b0038",
+                "reference": "f53b6131a12a41846c5ca7d2246280ffab9b0038",
                 "shasum": ""
             },
             "type": "library",
@@ -46,7 +45,7 @@
                 "router",
                 "routing"
             ],
-            "time": "2015-12-06 08:53:06"
+            "time": "2016-01-20T00:06:23+00:00"
         }
     ],
     "packages-dev": [],

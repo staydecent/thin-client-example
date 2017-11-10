@@ -1,42 +1,40 @@
-'use strict'
+import $ from 'jquery'
 
-var $ = require('jquery')
-var riot = require('riot')
-var pjaxRouter = require('./services/pjaxRouter.js')
-var todo = require('./todo.tag')
+import pjaxRouter from './services/pjaxRouter'
+import Todo from './components/Todo'
 
 var router = pjaxRouter({
   routes: {
-    '/react': function() {
-      riot.mount(todo)
+    '/react': () => {
+      const node = document.getElementById('Todo')
+      Preact.render(<Todo />, node.parent, node)
     }
   },
   animation: {
+    duration: 200,
     exit: {
       opacity: 0,
-      left: '-100%'
+      marginTop: '25px'
     },
     preEnter: {
       opacity: 0,
-      right: '-100%'
+      marginTop: '25px'
     },
     enter: {
       opacity: 1,
-      right: '0'
+      marginTop: '0px'
     }
   }
 })
 
 // Handle browser navigation (ex. back button)
-window.onpopstate = function() {
+window.onpopstate = () =>
   router.navigate(window.location.pathname)
-}
 
 // Add our event listeners on nav links
-$(document).ready(function() {
-  console.log('ready', $('.nav > a.button'))
-  $('.nav > a.button').on('click', function onNavClick(ev) {
+$(document).ready(() =>
+  $('.nav > a.button').on('click', function onNavClick (ev) {
     ev.preventDefault()
     router.navigate(ev.target.getAttribute('href'))
   })
-})
+)

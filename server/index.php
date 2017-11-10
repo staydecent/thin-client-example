@@ -8,11 +8,8 @@ use Gum\Request as Req;
 use Acme\Helpers as H;
 
 Route::get('/(home|react)?', function($args) {
-  $v = 'home';
-  if (isset($args[1])) {
-    $v = $args[1];
-  }
-  echo H::tpl($v);
+  $view = isset($args[1]) ? $args[1] : 'home';
+  echo H::pjax($view);
 });
 
 // handle 404

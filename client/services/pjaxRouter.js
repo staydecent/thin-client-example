@@ -2,7 +2,7 @@
 
 var $ = require('jquery')
 
-module.exports = function(opts) {
+module.exports = function (opts) {
   var defaultOps = {
     selector: '#pjax',
     routes: {},
@@ -22,7 +22,7 @@ module.exports = function(opts) {
 
   opts = $.extend(defaultOps, opts)
 
-  var handleRouting = function() {
+  var handleRouting = function () {
     var route = window.location.pathname
     if (opts.routes.hasOwnProperty(route)) {
       opts.routes[route]()
@@ -37,15 +37,15 @@ module.exports = function(opts) {
   }
 
   // Load partial template from server and update pushState
-  function navigate(url) {
+  function navigate (url) {
     $.ajax({
       url: url,
       headers: { 'X-PJAX': true },
-      success: function(resp) {
+      success: function (resp) {
         $(opts.selector).animate(
           opts.animation.exit,
           opts.animation.duration,
-          function() {
+          function () {
             $(opts.selector).replaceWith(resp)
             $(opts.selector)
               .css(opts.animation.preEnter)
@@ -59,7 +59,7 @@ module.exports = function(opts) {
   }
 
   // Simplified wrapper around history.pushState
-  function pushState(url) {
+  function pushState (url) {
     if (url !== window.location.pathname) {
       window.history.pushState({}, '', url)
     }
